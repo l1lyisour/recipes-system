@@ -63,3 +63,40 @@ def test_recipe_scale(strawberry_milkshake):
 def test_recipe_scale_error(strawberry_milkshake):
     with pytest.raises(ValueError):
         strawberry_milkshake.scale(-1)
+
+@pytest.fixture
+def shopping_list():
+    return ShoppingList()
+
+def test_shopping_list_add_recipe(shopping_list, strawberry_milkshake):
+    shopping_list.add_recipe(strawberry_milkshake, 2)
+    items = shopping_list.get_list()
+    assert len(items) == 3
+    for item in items:
+        if item[0].name == "Клубника":
+            assert item[0].quantity == 400.0
+        elif item[0].name == "Молоко":
+            assert item[0].quantity == 600.0
+        elif item[0].name == "Сахар":
+            assert item[0].quantity == 100.0
+
+def test_shopping_list_remove_recipe(shopping_list, strawberry_milkshake):
+    shopping_list.add_recipe(strawberry_milkshake, 2)
+    shopping_list.remove_recipe("Клубничный милкшейк")
+    items = shopping_list.get_list()
+    assert len(items) == 0
+
+def test_shopping_list_get_list(shopping_list, strawberry_milkshake):
+    shopping_list.add_recipe(strawberry_milkshake, 1)
+    items = shopping_list.get_list()
+    assert len(items) == 3
+    for item in items:
+        if item[0].name == "Клубника":
+            assert item[0].quantity == 200.0
+        elif item[0].name == "Молоко":
+            assert item[0].quantity == 300.0
+        elif item[0].name == "Сахар":
+            assert item[0].quantity == 50.0
+def test_shopping_list_add(shopping_list, strawberry_milkshake):
+    with pytest.raises(ValueError):
+        shopping_list.add_recipe(strawberry_milkshake, -1)
