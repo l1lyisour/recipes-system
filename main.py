@@ -28,11 +28,13 @@ class Ingredient:
         if not isinstance(other,Ingredient):
             return False
         return self.name == other.name and self.unit == other.unit
+    def __hash__(self):
+        return hash((self.name, self.unit))
 
 class Recipe:
     def __init__(self,title,ingredients):
         self.title = title
-        self.ingredients = ingredients if ingredients else []
+        self.ingredients = ingredients if ingredients is not None else []
     
     def add_ingredient(self,ingredient: Ingredient):
         for item in self.ingredients:
@@ -68,7 +70,7 @@ class ShoppingList:
         self._items = []
     
     def add_recipe(self, recipe, portions):
-        if portions <= 0:
+        if not isinstance(portions, (int, float)) or portions <= 0:
             raise ValueError('Количество порций должно быть положительным')
         scaled_recipe = recipe.scale(portions)
         for i in scaled_recipe.ingredients:
