@@ -23,6 +23,10 @@ def test_ing_eq(strawberry):
 def test_ing_quantity(strawberry):
     with pytest.raises(ValueError):
         Ingredient("Клубника", -50, "г")
+    with pytest.raises(ValueError):
+        Ingredient("Клубника", 0, "г")
+    with pytest.raises(ValueError):
+        Ingredient("Клубника", "abc", "г")
 
 @pytest.fixture
 def strawberry_milkshake():
