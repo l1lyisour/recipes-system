@@ -15,7 +15,7 @@
 3. `requirements.txt` — зависимости
 4. `.gitignore` — исключения
 
-## Установка, запуск и использование
+## Установка и запуск 
 
 ```bash
 # 1. Клонировать проект
@@ -29,9 +29,11 @@ pip install -r requirements.txt
 
 # 4. Запустить тесты
 pytest -v
+```
 
-# 5. Использование
+## Использование
 
+```bash
 # Создание ингредиентов с использованием класса Ingredient
 tomato = Ingredient("Помидор", 2, "шт")
 cheese = Ingredient("Сыр", 150, "г")
@@ -52,3 +54,4 @@ shopping_list.add_recipe(scaled_pizza, 1)
 shopping_list.add_recipe(diet_pizza, 1)
 # Получаем готовый список покупок с учетом одинаковых ингредиентов
 total_shopping_list = shopping_list.get_list()
+```
