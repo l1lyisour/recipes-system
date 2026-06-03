@@ -105,3 +105,25 @@ def test_shopping_list_get_list(shopping_list, strawberry_milkshake):
 def test_shopping_list_add(shopping_list, strawberry_milkshake):
     with pytest.raises(ValueError):
         shopping_list.add_recipe(strawberry_milkshake, -1)
+
+def test_dietary_recipe_str():
+    dr = DietaryRecipe("Салат", "vegan", [Ingredient("Огурец", 100, "г")])
+    assert str(dr) == "[vegan] Салат : Огурец: 100.0 г"
+
+def test_dietary_recipe_scale():
+    dr = DietaryRecipe("Салат", "vegan", [Ingredient("Огурец", 100, "г")])
+    scaled = dr.scale(3)
+    assert isinstance(scaled, DietaryRecipe)
+    assert scaled.diet_type == "vegan"
+    assert scaled.ingredients[0].quantity == 300.0
+
+def test_shopping_list_add_operator(strawberry_milkshake):
+    sl1 = ShoppingList()
+    sl2 = ShoppingList()
+    sl1.add_recipe(strawberry_milkshake, 1)
+    sl2.add_recipe(strawberry_milkshake, 2)
+    combined = sl1 + sl2
+    items = combined.get_list()
+    for item in items:
+        if item.name == "Клубника":
+            assert item.quantity == 600.0  
